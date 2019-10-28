@@ -119,3 +119,8 @@ The Pet and Customer should no longer appear in `/matches` queries
 
 * Method: `POST`
 * Url path: `/customers/{id}/adopt?pet_id={pet_id}`
+
+## Remark
+
+The response handling which includes error handling is not yer finished.
+
