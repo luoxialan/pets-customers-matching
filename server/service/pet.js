@@ -1,9 +1,8 @@
 const pet = require("../model").pet;
 
-async function addPet(name, available_from, age, species, breed) {
+async function addPet(name, age, species, breed) {
     const petObj = {
         name: name,
-        available_from: available_from,
         age: age,
         species: species,
         breed: breed
@@ -14,14 +13,17 @@ async function addPet(name, available_from, age, species, breed) {
 
 async function getPetById(id) {
     const data = await pet.getPet(id)
-    if(data.species != 'dog') {
-        delete data.breed;
-    }
     return data
 }
 
 async function getMatchedPet(preferences) {
     const data = await pet.getPetByPreference(preferences)
+    if(typeof data === 'undefined') {
+        const err = new Error()
+        err.message = 'not.found'
+        err.status = '404'
+        throw err
+    }
     return data
 }
 

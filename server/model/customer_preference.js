@@ -22,8 +22,7 @@ async function addPreference(preference) {
             }
         })
         .catch(err => {
-            console.log('[Model] Customer Preference: addPreference(), ' + err.message)
-            throw new Error('database.excution.error')
+            throw err
         });
 }
 
@@ -35,8 +34,7 @@ async function getPreferences(customerId) {
             return res
         })
         .catch(err => {
-            console.log('[Model] Customer Preference: getPreferences(), ' + err.message)
-            throw new Error('database.excution.error')
+            throw err
         });
 }
 

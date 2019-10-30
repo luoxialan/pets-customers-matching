@@ -5,5 +5,5 @@ COPY . /app
 WORKDIR /app
 # RUN npm install && npm cache clean --force
 RUN npm install
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "build"]
 # CMD npm run start

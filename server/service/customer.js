@@ -67,11 +67,6 @@ async function getCustomerById(id) {
 async function getMatchedPets(id) {
     const preferences = await customerPreference.getPreferences(id)
     const data = await pet.getMatchedPet(preferences)
-    data.forEach(element => {
-        if(element.species != 'dog') {
-            delete element.breed
-        }
-    });
     return data
 }
 

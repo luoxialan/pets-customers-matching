@@ -4,8 +4,9 @@
   "description": "Koa project for rest api",
   "main": "./app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ."
+    "start": "node ./app.js",
+    "test": "mocha test/**/*.test.js",
+    "build": "npm run test & npm run start"
   },
   "author": "",
   "license": "ISC",
@@ -15,5 +16,11 @@
     "koa-bodyparser": "^4.2.1",
     "koa-joi-router": "^6.0.0",
     "mysql": "^2.17.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "sinon": "^7.5.0",
+    "supertest": "^4.0.2"
   }
 }

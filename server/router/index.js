@@ -13,7 +13,6 @@ router.route({
         type: 'json',
         body: Joi.object({
             name: Joi.string().required(),
-            // available_from: Joi.string().optional(),
             age: Joi.number().integer().greater(-1).required(),
             species: Joi.string().valid('cat', 'dog', 'rabbit').required(),
             breed: Joi.string().valid('labrador', 'poodle', 'spaniel', 'terrier').optional(),
@@ -22,13 +21,19 @@ router.route({
     },
     handler: async (ctx) => {
         if (ctx.invalid) {
-            ctx.response.status = 400;
-            const error = 'invalid.parameter';
+            ctx.status = 400;
             ctx.body = {
-                error
+                status_code: 400,
+                message: 'invalid.param',
+                details: ctx.invalid.params.msg
             };
         } else {
-            await petCtrl.addPet(ctx);
+            const data = await petCtrl.addPet(ctx);
+            ctx.response.status = 200;
+            ctx.body = {
+                status_code: 1,
+                data
+            };
         }
     }
 })
@@ -44,14 +49,27 @@ router.route({
     },
     handler: async (ctx) => {
         if (ctx.invalid) {
-            console.log(JSON.stringify(ctx.invalid))
             ctx.status = 400;
-            const error = 'invalid.parameter';
             ctx.body = {
-                error
+                status_code: 400,
+                message: 'invalid.param',
+                details: ctx.invalid.params.msg
             };
         } else {
-            await petCtrl.getPetById(ctx);
+            const{ status_code, data } = await petCtrl.getPetById(ctx);
+            if (status_code == 1) {
+                ctx.response.status = 200;
+                ctx.body = {
+                    status_code: 1,
+                    data
+                };
+            } else {
+                ctx.response.status = status_code;
+                ctx.body = {
+                    status_code: status_code,
+                    message: data
+                };
+            }
         }
     }
 })
@@ -68,12 +86,18 @@ router.route({
     handler: async (ctx) => {
         if (ctx.invalid) {
             ctx.status = 400;
-            const error = 'invalid.parameter';
             ctx.body = {
-                error
+                status_code: 400,
+                message: 'invalid.param',
+                details: ctx.invalid.params.msg
             };
         } else {
-            await petCtrl.getMatchedCustomer(ctx);
+            const data = await petCtrl.getMatchedCustomer(ctx);
+            ctx.response.status = 200;
+            ctx.body = {
+                status_code: 1,
+                data
+            };
         }
     }
 })
@@ -94,13 +118,19 @@ router.route({
     },
     handler: async (ctx) => {
         if (ctx.invalid) {
-            ctx.response.status = 400;
-            const error = 'invalid.parameter';
+            ctx.status = 400;
             ctx.body = {
-                error
+                status_code: 400,
+                message: 'invalid.param',
+                details: ctx.invalid.params.msg
             };
         } else {
-            await customerCtrl.addCustomer(ctx);
+            const data = await customerCtrl.addCustomer(ctx);
+            ctx.response.status = 200;
+            ctx.body = {
+                status_code: 1,
+                data
+            };
         }
     }
 })
@@ -117,12 +147,26 @@ router.route({
     handler: async (ctx) => {
         if (ctx.invalid) {
             ctx.status = 400;
-            const error = 'invalid.parameter';
             ctx.body = {
-                error
+                status_code: 400,
+                message: 'invalid.param',
+                details: ctx.invalid.params.msg
             };
         } else {
-            await customerCtrl.getCustomerById(ctx);
+            const{ status_code, data } = await customerCtrl.getCustomerById(ctx);
+            if (status_code == 1) {
+                ctx.response.status = 200;
+                ctx.body = {
+                    status_code: 1,
+                    data
+                };
+            } else {
+                ctx.response.status = status_code;
+                ctx.body = {
+                    status_code: status_code,
+                    message: data
+                };
+            }
         }
     }
 })
@@ -139,12 +183,18 @@ router.route({
     handler: async (ctx) => {
         if (ctx.invalid) {
             ctx.status = 400;
-            const error = 'invalid.parameter';
             ctx.body = {
-                error
+                status_code: 400,
+                message: 'invalid.param',
+                details: ctx.invalid.params.msg
             };
         } else {
-            await customerCtrl.getMatchedPets(ctx);
+            const data = await customerCtrl.getMatchedPets(ctx);
+            ctx.response.status = 200;
+            ctx.body = {
+                status_code: 1,
+                data
+            };
         }
     }
 })
@@ -163,14 +213,19 @@ router.route({
     },
     handler: async (ctx) => {
         if (ctx.invalid) {
-            console.log(JSON.stringify(ctx.invalid))
             ctx.status = 400;
-            const error = 'invalid.parameter';
             ctx.body = {
-                error
+                status_code: 400,
+                message: 'invalid.param',
+                details: ctx.invalid.params.msg
             };
         } else {
-            await customerCtrl.adoptPet(ctx);
+            const data = await customerCtrl.adoptPet(ctx);
+            ctx.response.status = 200;
+            ctx.body = {
+                status_code: 1,
+                data
+            };
         }
     }
 })

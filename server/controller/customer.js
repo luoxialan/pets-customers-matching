@@ -2,10 +2,16 @@ const customer = require("../service").customer;
 
 class CustomnerController {
     static async getCustomerById(ctx) {
-        let { id } = ctx.params;
-        let data = await customer.getCustomerById(id)
-        ctx.response.status = 200;
-        ctx.body = { data }
+        const { id } = ctx.params;
+        const data = await customer.getCustomerById(id);
+        let status_code = 1;
+        if (typeof data === 'undefined') {
+            status_code = 404;
+            const message = 'not.found';
+            return { status_code, data: message };
+        }
+        return { status_code, data };
+        return data
     }
 
     static async addCustomer(ctx) {
@@ -17,23 +23,20 @@ class CustomnerController {
             breed
         }
         const data = await customer.addCustomer(cus)
-        ctx.response.status = 200;
-        ctx.body = { data }
+        return data
     }
 
     static async getMatchedPets(ctx) {
         let { id } = ctx.params;
         let data = await customer.getMatchedPets(id)
-        ctx.response.status = 200;
-        ctx.body = { data }
+        return data
     }
 
     static async adoptPet(ctx) {
         let { id } = ctx.params;
         let { pet_id } = ctx.query;
         let data = await customer.adoptPet(id, pet_id)
-        ctx.response.status = 200;
-        ctx.body = { data }
+        return data
     }
 }
 

@@ -20,8 +20,9 @@ async function addPet(pet) {
 }
 
 async function getPet(id) {
-    let sql = `select id, name, available_from, age, species, breed, status from pet where id = ${id}`;
-    return database.sqlAction(sql).then(res => {
+    const queryParam = [id]
+    let sql = `select id, name, available_from, age, species, breed, status from pet where id = ?`;
+    return database.sqlAction(sql, queryParam).then(res => {
         res.forEach(row => {
             const status = row['status'];
             row['status'] = constants.PET_STATUS[status];
